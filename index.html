@@ -159,6 +159,16 @@
 
   .blurb { font-size: 16px; color: var(--ink-soft); margin: 0; }
 
+  /* wide entries: figure below text, full column width, nothing cropped */
+  .entry-wide { flex-direction: column; gap: 14px; }
+  .entry-wide .thumb {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: auto;
+    background: none;
+  }
+  .entry-wide .thumb img { object-fit: contain; }
+
   /* ---------- focus tags ---------- */
 
   .tags {
@@ -263,33 +273,52 @@
 </section>
 
 <section>
-  <h2>Research</h2>
-  <p class="section-note">
-    Detection and image quality assessment, mostly at the point where classical imaging
-    metrics meet learned models.
-  </p>
+  <h2>Projects</h2>
+  <p class="section-note">Tools I've built, mostly to answer a question I had at work.</p>
+
+  <div class="entry entry-wide">
+    <div class="entry-body">
+      <p class="entry-title"><a href="https://github.com/yumiao0557/neuralisp">Neural ISP</a></p>
+      <p class="entry-links"><a href="https://github.com/yumiao0557/neuralisp">code</a></p>
+      <p class="blurb">
+        A neural ISP built from scratch: a single U-Net does joint demosaic and denoise on
+        synthetic Bayer RAW, trained with a physically calibrated noise model so one model
+        covers the full ISO range. Beats bilinear demosaic by up to 9.4dB PSNR at low ISO and
+        stays well ahead even against a real classical pipeline (22.1dB vs 18.9dB on Kodak at
+        high ISO), because denoising is joint and RGB instead of a separate luma-only filter.
+      </p>
+    </div>
+    <div class="thumb"><img src="images/neural-isp.jpg" alt="Neural ISP: bilinear demosaic, network prediction, and ground truth on a Kodak test image at high simulated ISO"></div>
+  </div>
+
+  <div class="entry entry-wide">
+    <div class="entry-body">
+      <p class="entry-title"><a href="https://github.com/yumiao0557/fast-openISP">Adapted openISP</a></p>
+      <p class="entry-links"><a href="https://github.com/yumiao0557/fast-openISP">code</a></p>
+      <p class="blurb">
+        A fork of <a href="https://github.com/QiuJueqin/fast-openISP">fast-openISP</a> used as
+        the classical-pipeline baseline for Neural ISP. Adds a lens-shading-correction module
+        and a chroma-noise-reduction module, and rewrites the brightness/contrast and
+        hue/saturation stages, so the comparison runs against a real DPC/BLC/AWB/demosaic/CCM/
+        gamma/NLM/BNF pipeline, not just plain bilinear.
+      </p>
+    </div>
+    <div class="thumb"><img src="images/adapted-openisp.jpg" alt="Adapted openISP: bilinear, traditional ISP output, network prediction, and ground truth on the same Kodak test image"></div>
+  </div>
 
   <div class="entry">
-    <div class="thumb"><img src="images/bccd.jpg" alt=""></div>
     <div class="entry-body">
-      <p class="entry-title"><a href="REPLACE-paper-url">Benchmarking YOLOv12 and YOLOv11 for Blood Cell Detection</a></p>
-      <p class="authors"><span class="me">Yu Miao</span>, Wenxi Tang</p>
-      <p class="venue">Under review, 2026</p>
-      <p class="entry-links">
-        <a href="REPLACE-paper-url">paper</a><span>/</span><a href="REPLACE-code-url">code</a>
-      </p>
+      <p class="entry-title"><a href="https://github.com/yumiao0557/iqbot">IQ Bot</a></p>
+      <p class="entry-links"><a href="https://github.com/yumiao0557/iqbot">code</a></p>
       <p class="blurb">
-        A controlled comparison of recent YOLO detector generations on the BCCD v3 dataset,
-        looking at where architectural changes actually move the needle on small, densely
-        packed cell targets.
+        An LLM-backed ISP tuning assistant. Describe an image quality problem in plain
+        language ("the image is too dark, make it 10% brighter") and it returns both an
+        explanation and a machine-readable parameter change for the tuning pipeline. Runs as a
+        terminal chat, a REST endpoint, or a token-streaming websocket, and swaps between a
+        dependency-free rule-based backend and a real Qwen3 model behind one interface.
       </p>
     </div>
   </div>
-</section>
-
-<section>
-  <h2>Projects</h2>
-  <p class="section-note">Tools I've built, mostly to answer a question I had at work.</p>
 
   <div class="entry">
     <div class="thumb"><img src="images/mtf.jpg" alt=""></div>
@@ -297,31 +326,9 @@
       <p class="entry-title"><a href="https://github.com/yumiao0557">Slanted-Edge MTF Visualizer</a></p>
       <p class="entry-links"><a href="https://github.com/yumiao0557">code</a></p>
       <p class="blurb">
-        An ISO 12233 slanted-edge MTF tool that shows the intermediate steps — edge fit, ESF,
-        LSF, and the resulting MTF curve — instead of collapsing everything to a single
-        MTF50 number.
-      </p>
-    </div>
-  </div>
-
-  <div class="entry">
-    <div class="thumb"><img src="images/iqbot.jpg" alt=""></div>
-    <div class="entry-body">
-      <p class="entry-title">IQ Bot</p>
-      <p class="blurb">
-        An LLM-based tool for subjective image quality analysis, built to sit on top of an
-        automated capture pipeline and cut down the volume of images needing manual review.
-      </p>
-    </div>
-  </div>
-
-  <div class="entry">
-    <div class="thumb"><img src="images/neural-isp.jpg" alt=""></div>
-    <div class="entry-body">
-      <p class="entry-title">Neural ISP</p>
-      <p class="blurb">
-        An ongoing exploration of learned RAW→RGB pipelines — what a network can replace
-        outright, what still wants a hand-tuned block, and what it costs on device.
+        An ISO 12233 slanted-edge MTF tool that shows the intermediate steps (edge fit, ESF,
+        LSF, and the resulting MTF curve) instead of collapsing everything to a single MTF50
+        number.
       </p>
     </div>
   </div>
@@ -333,6 +340,64 @@
       <p class="blurb">
         A camera-based hydration tracker. A small excuse to work end-to-end on a vision
         problem where the capture conditions are genuinely uncontrolled.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Research</h2>
+  <p class="section-note">
+    Detection and image quality assessment, mostly at the point where classical imaging
+    metrics meet learned models.
+  </p>
+
+  <div class="entry">
+    <div class="entry-body">
+      <p class="entry-title"><a href="https://www.researchsquare.com/article/rs-10063019/v1">Scale-Dependent Performance of YOLOv12 and YOLOv11 for Automated Blood Cell Detection: A Controlled Benchmark on BCCD</a></p>
+      <p class="authors"><span class="me">Yu Miao</span>, Wenxi Tang</p>
+      <p class="venue">Preprint, Research Square, 2026</p>
+      <p class="entry-links">
+        <a href="https://www.researchsquare.com/article/rs-10063019/v1">paper</a>
+      </p>
+      <p class="blurb">
+        A controlled, scale-by-scale benchmark of YOLOv11 and YOLOv12 (nano through
+        extra-large) on the BCCD v3 dataset. Mean accuracy is nearly identical between the two
+        generations overall, but McNemar's test shows YOLOv12 wins at nano scale, YOLOv11 wins
+        at medium and large, and they converge at extra-large: YOLOv12 does not uniformly beat
+        its predecessor.
+      </p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-body">
+      <p class="entry-title"><a href="https://www.thelancet.com/journals/landig/article/PIIS2589-7500(22)00234-5/fulltext">Does deidentification of data from wearable devices give us a false sense of security? A systematic review</a></p>
+      <p class="authors">Lucy Chikwetu, <span class="me">Yu Miao</span>, Melat K Woldetensae, Diarra Bell, Daniel M Goldenholz, Jessilyn Dunn</p>
+      <p class="venue">The Lancet Digital Health, 2023</p>
+      <p class="entry-links">
+        <a href="https://www.thelancet.com/journals/landig/article/PIIS2589-7500(22)00234-5/fulltext">paper</a>
+      </p>
+      <p class="blurb">
+        A systematic review of 72 studies (from 17,625 screened) on reidentification risk in
+        wearable-device data. Deidentification alone is not enough: in several studies,
+        recordings as short as one to 300 seconds were sufficient to reidentify a person.
+      </p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-body">
+      <p class="entry-title"><a href="https://medium.com/@yumiao0557/if-your-watch-watched-you-eat-e7b007db9ab1">If your watch watched you eat...</a></p>
+      <p class="authors"><span class="me">Nate Miao</span></p>
+      <p class="venue">Medium, 2023</p>
+      <p class="entry-links">
+        <a href="https://medium.com/@yumiao0557/if-your-watch-watched-you-eat-e7b007db9ab1">article</a>
+      </p>
+      <p class="blurb">
+        A walkthrough of training models to detect eating from wearable data: physiological
+        signals from an Empatica E4, logistic regression versus a small neural network, with
+        the neural net reaching 98% accuracy.
       </p>
     </div>
   </div>
