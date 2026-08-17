@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nate (Yu Miao) — Camera Systems / ISP Engineer</title>
+<meta name="description" content="Nate (Yu Miao) — camera systems and ISP engineer. Computational photography, image quality, sensor tuning, neural ISP.">
+<meta name="author" content="Yu Miao">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nate (Yu Miao) — Camera Systems / ISP Engineer">
+<meta property="og:description" content="Camera systems and ISP engineer. Computational photography, image quality, sensor tuning, neural ISP.">
+<meta property="og:image" content="images/profile.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:        #1a1a1a;
+    --ink-soft:   #4a4a4a;
+    --rule:       #e2e2e2;
+    --link:       #2b5f8c;   /* muted photographic blue */
+    --link-hover: #c25b2e;   /* warm highlight on hover */
+    --placeholder:#f2f2f2;
+    --col:        820px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0 24px 96px;
+    font-family: 'Lato', Verdana, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.62;
+    color: var(--ink);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: var(--col); margin: 0 auto; }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { color: var(--link-hover); }
+  a:focus-visible { outline: 2px solid var(--link-hover); outline-offset: 3px; }
+
+  /* ---------- header ---------- */
+
+  header { padding: 72px 0 8px; }
+
+  .name {
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: -0.4px;
+    margin: 0 0 4px;
+  }
+  .name .zh { font-size: 26px; color: var(--ink-soft); margin-left: 8px; }
+
+  .tagline {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+  }
+
+  .intro {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  .intro-text { flex: 1 1 auto; }
+  .intro-text p { margin: 0 0 18px; }
+
+  .portrait {
+    flex: 0 0 200px;
+    width: 200px;
+  }
+  .portrait img {
+    width: 100%;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .links {
+    margin-top: 4px;
+    font-size: 16px;
+  }
+  .links a { white-space: nowrap; }
+  .links span { color: #bbb; margin: 0 8px; }
+
+  /* ---------- sections ---------- */
+
+  section { margin-top: 56px; }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0 0 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-note {
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin: 0 0 28px;
+  }
+
+  /* ---------- entry rows ---------- */
+
+  .entry {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    padding: 22px 0;
+  }
+  .entry + .entry { border-top: 1px solid #f0f0f0; }
+
+  .thumb {
+    flex: 0 0 190px;
+    width: 190px;
+    aspect-ratio: 4 / 3;
+    background: var(--placeholder);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .entry-body { flex: 1 1 auto; min-width: 0; }
+
+  .entry-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    line-height: 1.35;
+  }
+  .entry-title a { color: var(--ink); }
+  .entry-title a:hover { color: var(--link-hover); }
+
+  .authors { font-size: 16px; margin: 0 0 2px; }
+  .authors .me { font-weight: 700; }
+
+  .venue {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+  }
+  .venue .award { font-style: normal; font-weight: 700; color: var(--ink); }
+
+  .entry-links { font-size: 15px; margin: 0 0 10px; }
+  .entry-links span { color: #bbb; margin: 0 5px; }
+
+  .blurb { font-size: 16px; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- focus tags ---------- */
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .tag {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 4px 13px;
+    white-space: nowrap;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    margin-top: 64px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    color: #999;
+  }
+
+  /* ---------- mobile ---------- */
+
+  @media (max-width: 680px) {
+    body { font-size: 16px; padding: 0 20px 64px; }
+    header { padding-top: 44px; }
+    .name { font-size: 32px; }
+    .intro { flex-direction: column-reverse; gap: 24px; }
+    .portrait { flex: 0 0 auto; width: 148px; }
+    .entry { flex-direction: column; gap: 14px; }
+    .thumb { flex: 0 0 auto; width: 100%; max-width: 320px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <h1 class="name">Nate Miao<span class="zh">苗宇</span></h1>
+  <p class="tagline">Camera systems &amp; ISP engineer</p>
+
+  <div class="intro">
+    <div class="intro-text">
+      <p>
+        I build camera pipelines — from sensor characterization and tuning through to the
+        image quality metrics that decide whether a pipeline is actually good. Most recently
+        I worked on computational photography at
+        <a href="https://www.glassimaging.com">Glass Imaging</a>, and before that spent three
+        years on the <a href="https://www.qualcomm.com">Qualcomm</a> Spectra ISP team, where I
+        worked on sensor tuning, noise modeling, HDR, and NPU deployment.
+      </p>
+      <p>
+        I hold an M.S. in Biomedical Engineering from Duke and a B.S. in Bioengineering from
+        UC San Diego. Lately I've been interested in learned RAW→RGB pipelines and in using
+        vision-language models to automate subjective image quality review — two halves of the
+        same question about what parts of image quality a model can actually judge.
+      </p>
+      <p>
+        I'm based in the Bay Area and currently looking for my next camera systems role.
+      </p>
+
+      <p class="links">
+        <a href="mailto:REPLACE@example.com">Email</a><span>/</span><a
+        href="https://github.com/yumiao0557">GitHub</a><span>/</span><a
+        href="REPLACE-linkedin-url">LinkedIn</a><span>/</span><a
+        href="resume.pdf">Resume</a><span>/</span><a
+        href="REPLACE-scholar-url">Scholar</a>
+      </p>
+    </div>
+
+    <div class="portrait">
+      <img src="images/profile.jpg" alt="Nate Miao">
+    </div>
+  </div>
+</header>
+
+<section>
+  <h2>Focus areas</h2>
+  <p class="section-note">Where I've spent the most hands-on time.</p>
+  <div class="tags">
+    <span class="tag">ISP tuning (Qualcomm Spectra / Chromatix)</span>
+    <span class="tag">Sensor characterization</span>
+    <span class="tag">Noise modeling — shot / read / dark current / FPN</span>
+    <span class="tag">MTF &amp; ISO 12233 slanted edge</span>
+    <span class="tag">HDR — MFHDR, staggered / DOL</span>
+    <span class="tag">Lens shading, CCM, ABF</span>
+    <span class="tag">Multi-sensor systems</span>
+    <span class="tag">Hexagon NPU deployment</span>
+    <span class="tag">Objective + subjective IQ evaluation</span>
+  </div>
+</section>
+
+<section>
+  <h2>Research</h2>
+  <p class="section-note">
+    Detection and image quality assessment, mostly at the point where classical imaging
+    metrics meet learned models.
+  </p>
+
+  <div class="entry">
+    <div class="thumb"><img src="images/bccd.jpg" alt=""></div>
+    <div class="entry-body">
+      <p class="entry-title"><a href="REPLACE-paper-url">Benchmarking YOLOv12 and YOLOv11 for Blood Cell Detection</a></p>
+      <p class="authors"><span class="me">Yu Miao</span>, Wenxi Tang</p>
+      <p class="venue">Under review, 2026</p>
+      <p class="entry-links">
+        <a href="REPLACE-paper-url">paper</a><span>/</span><a href="REPLACE-code-url">code</a>
+      </p>
+      <p class="blurb">
+        A controlled comparison of recent YOLO detector generations on the BCCD v3 dataset,
+        looking at where architectural changes actually move the needle on small, densely
+        packed cell targets.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <p class="section-note">Tools I've built, mostly to answer a question I had at work.</p>
+
+  <div class="entry">
+    <div class="thumb"><img src="images/mtf.jpg" alt=""></div>
+    <div class="entry-body">
+      <p class="entry-title"><a href="https://github.com/yumiao0557">Slanted-Edge MTF Visualizer</a></p>
+      <p class="entry-links"><a href="https://github.com/yumiao0557">code</a></p>
+      <p class="blurb">
+        An ISO 12233 slanted-edge MTF tool that shows the intermediate steps — edge fit, ESF,
+        LSF, and the resulting MTF curve — instead of collapsing everything to a single
+        MTF50 number.
+      </p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="thumb"><img src="images/iqbot.jpg" alt=""></div>
+    <div class="entry-body">
+      <p class="entry-title">IQ Bot</p>
+      <p class="blurb">
+        An LLM-based tool for subjective image quality analysis, built to sit on top of an
+        automated capture pipeline and cut down the volume of images needing manual review.
+      </p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="thumb"><img src="images/neural-isp.jpg" alt=""></div>
+    <div class="entry-body">
+      <p class="entry-title">Neural ISP</p>
+      <p class="blurb">
+        An ongoing exploration of learned RAW→RGB pipelines — what a network can replace
+        outright, what still wants a hand-tuned block, and what it costs on device.
+      </p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="thumb"><img src="images/hydrominder.jpg" alt=""></div>
+    <div class="entry-body">
+      <p class="entry-title">HydroMinder</p>
+      <p class="blurb">
+        A camera-based hydration tracker. A small excuse to work end-to-end on a vision
+        problem where the capture conditions are genuinely uncontrolled.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Photography</h2>
+  <p class="section-note">
+    Occupational hazard. Replace this with a few frames you actually like, or delete
+    the section.
+  </p>
+  <div class="entry">
+    <div class="thumb"><img src="images/photo1.jpg" alt=""></div>
+    <div class="entry-body">
+      <p class="blurb">
+        Add a short line here about what you shoot, and link out to a gallery or Flickr
+        if you keep one.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Layout adapted from <a href="https://jonbarron.info">Jon Barron</a>'s template.
+</footer>
+
+</div>
+</body>
+</html>
